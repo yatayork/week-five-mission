@@ -332,6 +332,7 @@ body {
   max-width: 920px;
   margin: 0 auto;
   padding: 50px 0;
+  justify-content: space-between;
 }
 
 .search-area p {

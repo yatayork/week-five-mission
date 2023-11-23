@@ -88,6 +88,50 @@ const renderData = () => {
                 </li>`;
     });
     searchNumField.innerHTML = `<p id="searchResult-text">本次搜尋共 ${data.length}筆資料</p>`;
+    console.log(data[0].area);
+    let taipei = 0;
+    let kaohsiung = 0;
+    let taichung = 0;
+    data.forEach(element => {
+        console.log(element.area);
+        switch (true) {
+            case element.area == "台北":
+                taipei += 1;
+                break;
+            case element.area == "高雄":
+                kaohsiung += 1;
+                break;
+            case element.area == "台中":
+                taichung += 1;
+                break;
+        }
+    });
+
+    var chart = c3.generate({
+        bindto: "#chart",
+        size: {
+            width: 225,
+            height: 225,
+        },
+        data: {
+            columns: [
+                ["台北", `${taipei}`],
+                ["高雄", `${kaohsiung}`],
+                ["台中", `${taichung}`],
+            ],
+            type: "donut",
+            onclick: function (d, i) {
+                console.log("onclick", d, i);
+            },
+            onmouseover: function (d, i) {
+                console.log("onmouseover", d, i);
+            },
+            onmouseout: function (d, i) {
+                console.log("onmouseout", d, i);
+            },
+        },
+    });
+
     ticketCardArea.innerHTML = str;
 };
 
@@ -140,6 +184,20 @@ const addTicket = () => {
         price: ticketPrice.value,
         rate: ticketRate.value,
     };
+
+    if (
+        newData.id == "" ||
+        newData.name == "" ||
+        newData.imgUrl == "" ||
+        newData.area == "" ||
+        newData.description == "" ||
+        newData.group == "" ||
+        newData.price == "" ||
+        newData.rate == ""
+    ) {
+        alert("請勿空白");
+        return;
+    }
     data.push(newData);
     //後面放入renderData
     renderData(data);
